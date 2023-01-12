@@ -1,5 +1,28 @@
-let humanChoice = prompt("Enter your choice!\n1. Rock\n2. Paper\n3. Scissors")
+let input = prompt("Enter your choice!\nRock\nPaper\nScissors")
 
 let computerChoice = Math.floor(Math.random(5) * 3) + 1
 
 console.log(humanChoice + " " + computerChoice)
+
+
+
+if (humanChoice > computerChoice){
+    if (humanChoice == 3 && computerChoice == 1){
+        console.log("Computer wins!")
+    }
+    else{
+        console.log("Human wins!")
+    }
+}
+
+else {
+    if (computerChoice == 3 && humanChoice == 1){
+        console.log("Human wins!")
+    }
+    else if (computerChoice == humanChoice) {
+        console.log("Its a tie!")
+    }
+    else{
+        console.log("Computer wins!")
+    }
+}

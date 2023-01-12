@@ -1,16 +1,7 @@
 let input = prompt("Enter your choice!\nRock\nPaper\nScissors").toLowerCase()
-let humanChoice
-switch (input){
-    case "rock":
-        humanChoice = 1;
-        break;
-    case "scissors":
-        humanChoice = 2;
-        break;
-    case "paper":
-        humanChoice = 3;
-        break;    
-}
+
+let choices = ["rock", "paper", "scissors"]
+let humanChoice = choices.indexOf('input') + 1
 
 let computerChoice = Math.floor(Math.random(5) * 3) + 1
 

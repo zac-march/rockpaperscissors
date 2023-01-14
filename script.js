@@ -5,6 +5,8 @@ const choices = ["rock", "paper", "scissors"]
 //     console.log(input)
 // }
 
+game()
+
 
 function game(){
     score = [0, 0]
@@ -13,22 +15,28 @@ function game(){
         if (isHumanWinner){score[0] = score[0] + 1}
         else {score[1] = score[1] + 1}
     }
+    console.log(`Game End!\nHuman points: ${score[0]}\nComputer points: ${score[1]}`)
 }
 
-
-
 function playRound() {
-    input = prompt("Enter your choice!\nRock\nPaper\nScissors").toLowerCase()
+    let winningChoice = 'Tie'
+    let computerChoice = 0;
+    while (winningChoice == 'Tie') {
+        input = prompt("Enter your choice!\nRock\nPaper\nScissors").toLowerCase()
 
-    let humanChoice = choices.indexOf(input)
-    let computerChoice = Math.floor(Math.random(0) * 3)
+        let humanChoice = choices.indexOf(input)
+        computerChoice = Math.floor(Math.random() * 3)
 
-    console.log(`You chose: ${choices[humanChoice]} (${humanChoice})\nComputer chose: ${choices[computerChoice]} (${computerChoice})`)
+        console.log(`You chose: ${choices[humanChoice]} (${humanChoice})\nComputer chose: ${choices[computerChoice]} (${computerChoice})`)
 
-    winningChoice = getWinningChoice(humanChoice, computerChoice)
-    displayGameEndText(winningChoice)
-    if (winningChoice != 'Tie'){
-        return isHumanWinner(winningChoice)
+        winningChoice = getWinningChoice(humanChoice, computerChoice)
+        displayGameEndText(winningChoice, humanChoice, computerChoice)
+    }
+
+    if (computerChoice == winningChoice) { 
+        return false
+    } else {
+        return true
     }
 }
 
@@ -53,15 +61,7 @@ function getWinningChoice(humanChoice, computerChoice){
     return "Tie" 
 }
 
-function isHumanWinner(winningChoice, computerChoice){
-    if (computerChoice == winningChoice) { 
-        return false
-    } else {
-        return true
-    }
-}
-
-function displayGameEndText(winningChoice) {
+function displayGameEndText(winningChoice, humanChoice, computerChoice) {
     if (winningChoice == 'Tie') {
         console.log(`Tie! ${choices[humanChoice]} ties with ${choices[humanChoice]}`)
     } else {

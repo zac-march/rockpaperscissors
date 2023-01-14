@@ -5,17 +5,34 @@ const choices = ["rock", "paper", "scissors"]
 //     console.log(input)
 // }
 
-input = prompt("Enter your choice!\nRock\nPaper\nScissors").toLowerCase()
 
-let humanChoice = choices.indexOf(input)
-let computerChoice = Math.floor(Math.random(0) * 3)
+function game(){
+    score = [0, 0]
+    for(i = 0; i < 5; i++){
+        let isHumanWinner = playRound()
+        if (isHumanWinner){score[0] = score[0] + 1}
+        else {score[1] = score[1] + 1}
+    }
+}
 
-console.log(`You chose: ${choices[humanChoice]} (${humanChoice})\nComputer chose: ${choices[computerChoice]} (${computerChoice})`)
 
-winningChoice = getWinner(humanChoice, computerChoice)
-displayGameEndText()
 
-function getWinner(humanChoice, computerChoice){
+function playRound() {
+    input = prompt("Enter your choice!\nRock\nPaper\nScissors").toLowerCase()
+
+    let humanChoice = choices.indexOf(input)
+    let computerChoice = Math.floor(Math.random(0) * 3)
+
+    console.log(`You chose: ${choices[humanChoice]} (${humanChoice})\nComputer chose: ${choices[computerChoice]} (${computerChoice})`)
+
+    winningChoice = getWinningChoice(humanChoice, computerChoice)
+    displayGameEndText(winningChoice)
+    if (winningChoice != 'Tie'){
+        return isHumanWinner(winningChoice)
+    }
+}
+
+function getWinningChoice(humanChoice, computerChoice){
     if (humanChoice > computerChoice){
         if (humanChoice == 2 && computerChoice == 0){
             return computerChoice
@@ -36,11 +53,18 @@ function getWinner(humanChoice, computerChoice){
     return "Tie" 
 }
 
-function displayGameEndText() {
+function isHumanWinner(winningChoice, computerChoice){
+    if (computerChoice == winningChoice) { 
+        return false
+    } else {
+        return true
+    }
+}
+
+function displayGameEndText(winningChoice) {
     if (winningChoice == 'Tie') {
         console.log(`Tie! ${choices[humanChoice]} ties with ${choices[humanChoice]}`)
-    }
-    else {
+    } else {
         losingChoice = computerChoice
         let endtext = "Win"
         if (computerChoice == winningChoice) { losingChoice = humanChoice; endtext = "Lose"} 

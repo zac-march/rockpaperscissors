@@ -7,14 +7,17 @@ const choices = ["rock", "paper", "scissors"]
 
 input = prompt("Enter your choice!\nRock\nPaper\nScissors").toLowerCase()
 
-let humanChoice = choices.indexOf(input) + 1
-let computerChoice = Math.floor(Math.random(5) * 3) + 1
+let humanChoice = choices.indexOf(input)
+let computerChoice = Math.floor(Math.random(0) * 3)
 
-console.log(`You chose: ${choices[humanChoice-1]} (${humanChoice})\nComputer chose: ${choices[computerChoice-1]} (${computerChoice})`)
+console.log(`You chose: ${choices[humanChoice]} (${humanChoice})\nComputer chose: ${choices[computerChoice]} (${computerChoice})`)
+
+winningChoice = getWinner(humanChoice, computerChoice)
+displayGameEndText()
 
 function getWinner(humanChoice, computerChoice){
     if (humanChoice > computerChoice){
-        if (humanChoice == 3 && computerChoice == 1){
+        if (humanChoice == 2 && computerChoice == 0){
             return computerChoice
         }
         else {
@@ -23,7 +26,7 @@ function getWinner(humanChoice, computerChoice){
     }
 
     else if (humanChoice < computerChoice) {
-        if (computerChoice == 3 && humanChoice == 1){
+        if (computerChoice == 2 && humanChoice == 0){
             return humanChoice
         } else {
             return computerChoice
@@ -33,14 +36,15 @@ function getWinner(humanChoice, computerChoice){
     return "Tie" 
 }
 
+function displayGameEndText() {
+    if (winningChoice == 'Tie') {
+        console.log(`Tie! ${choices[humanChoice]} ties with ${choices[humanChoice]}`)
+    }
+    else {
+        losingChoice = computerChoice
+        let endtext = "Win"
+        if (computerChoice == winningChoice) { losingChoice = humanChoice; endtext = "Lose"} 
+        console.log(`You ${endtext}! ${choices[winningChoice]} beats ${choices[losingChoice]}`)
+    }
+}
 
-winningChoice = getWinner(humanChoice, computerChoice)
-if (winningChoice == 'Tie') {
-    console.log(`Tie! ${choices[humanChoice - 1]} ties with ${choices[humanChoice - 1]}`)
-}
-else{
-    losingChoice = computerChoice
-    let endtext = "Win"
-    if (computerChoice == winningChoice) {losingChoice = humanChoice; endtext = "Lose"}
-    console.log(`You ${endtext}! ${choices[winningChoice - 1]} beats ${choices[losingChoice - 1]}`)
-}

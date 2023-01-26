@@ -10,7 +10,7 @@ const GAMEOVER_INDEX = 3;
 const HUMAN_SCORE_INDEX = 2
 const COMPUTER_SCORE_INDEX = 1
 
-let scores = {you: 0, computer: 0}
+let scores = {human: 0, computer: 0}
 
 choiceButtons.forEach((button) => {
     button.addEventListener('click', (e) => {
@@ -20,15 +20,14 @@ choiceButtons.forEach((button) => {
 });
 
 function updateScore(isHumanWinner){
-    if (isHumanWinner){scores['you'] += 1}
+    if (isHumanWinner){scores['human'] += 1}
     else {scores['computer'] += 1}
     
-    textDivs[SCORE_INDEX].textContent = `Human points: ${scores['you']}\nComputer points: ${scores['computer']}`
+    textDivs[SCORE_INDEX].textContent = `Human points: ${scores['human']}\nComputer points: ${scores['computer']}`
     
     for (key in scores){
         if (scores[key] == 5){
-
-            textDivs[GAMEOVER_INDEX].textContent = `${key} wins!`
+            textDivs[GAMEOVER_INDEX].textContent = `${key.toUpperCase()} WINS!`
             
         }
     }

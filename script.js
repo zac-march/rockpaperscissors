@@ -5,8 +5,12 @@ const textDivs = document.querySelectorAll('.display')
 const RESULT_INDEX = 0;
 const CHOICE_INDEX = 1;
 const SCORE_INDEX = 2;
+const GAMEOVER_INDEX = 3;
 
-let score = [0, 0]
+const HUMAN_SCORE_INDEX = 2
+const COMPUTER_SCORE_INDEX = 1
+
+let scores = {you: 0, computer: 0}
 
 choiceButtons.forEach((button) => {
     button.addEventListener('click', (e) => {
@@ -16,9 +20,18 @@ choiceButtons.forEach((button) => {
 });
 
 function updateScore(isHumanWinner){
-    if (isHumanWinner){score[0] = score[0] + 1}
-    else {score[1] = score[1] + 1}
-    textDivs[SCORE_INDEX].textContent = `Human points: ${score[0]}\nComputer points: ${score[1]}`
+    if (isHumanWinner){scores['you'] += 1}
+    else {scores['computer'] += 1}
+    
+    textDivs[SCORE_INDEX].textContent = `Human points: ${scores['you']}\nComputer points: ${scores['computer']}`
+    
+    for (key in scores){
+        if (scores[key] == 5){
+
+            textDivs[GAMEOVER_INDEX].textContent = `${key} wins!`
+            
+        }
+    }
 }
 
 function playRound(humanChoice) {

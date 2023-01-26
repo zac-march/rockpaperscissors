@@ -23,10 +23,9 @@ function playRound(humanChoice) {
 
     console.log(`You chose: ${choices[humanChoice]} (${humanChoice})\nComputer chose: ${choices[computerChoice]} (${computerChoice})`)
 
-    let winner;
     if (humanChoice != computerChoice){
         let isHumanWinner = getIsHumanWinner(humanChoice, computerChoice)
-        displayResult(winner, humanChoice, computerChoice)
+        displayResult(isHumanWinner, humanChoice, computerChoice)
         updateScore(isHumanWinner)
     }
     else {
@@ -53,12 +52,12 @@ function getIsHumanWinner(humanChoice, computerChoice){
     }
 }
 
-function displayResult(winner, humanChoice, computerChoice) {
+function displayResult(isHumanWinner, humanChoice, computerChoice) {
     losingChoice = computerChoice;
     winningChoice = humanChoice;
     endtext = "Win";
 
-    if (winner == 'computer') {
+    if (!isHumanWinner) {
         losingChoice = humanChoice;
         winningChoice = computerChoice;
         endtext = "Lose";

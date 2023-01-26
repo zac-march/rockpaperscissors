@@ -23,14 +23,13 @@ function playRound(humanChoice) {
 
     console.log(`You chose: ${choices[humanChoice]} (${humanChoice})\nComputer chose: ${choices[computerChoice]} (${computerChoice})`)
 
+    let isHumanWinner = null;
     if (humanChoice != computerChoice){
-        let isHumanWinner = getIsHumanWinner(humanChoice, computerChoice)
-        displayResult(isHumanWinner, humanChoice, computerChoice)
+        isHumanWinner = getIsHumanWinner(humanChoice, computerChoice)
         updateScore(isHumanWinner)
     }
-    else {
-        console.log(`Tie! ${choices[humanChoice]} ties with ${choices[computerChoice]}`)
-    }
+    console.log(isHumanWinner)
+    displayResult(isHumanWinner, humanChoice, computerChoice)
 }
 
 function getIsHumanWinner(humanChoice, computerChoice){
@@ -53,6 +52,12 @@ function getIsHumanWinner(humanChoice, computerChoice){
 }
 
 function displayResult(isHumanWinner, humanChoice, computerChoice) {
+
+    if (isHumanWinner == null){
+        console.log(`Tie! ${choices[humanChoice]} ties with ${choices[computerChoice]}`)
+        return
+    }
+
     losingChoice = computerChoice;
     winningChoice = humanChoice;
     endtext = "Win";

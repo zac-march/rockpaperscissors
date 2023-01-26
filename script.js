@@ -1,74 +1,70 @@
 const choices = ["rock", "paper", "scissors"]
-// let input = ''
-// while (input in choices == false){
-//     input = prompt("Enter your choice!\nRock\nPaper\nScissors").toLowerCase()
-//     console.log(input)
-// }
+const choiceButtons = document.querySelectorAll('.choice')
+let score = [0, 0]
 
-game()
+choiceButtons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+        playRound(choices.indexOf(e.target.id))
+        return
+    });
+});
+
+console.log(choiceButtons)
 
 
-function game(){
-    score = [0, 0]
-    for(i = 0; i < 5; i++){
-        let isHumanWinner = playRound()
-        if (isHumanWinner){score[0] = score[0] + 1}
-        else {score[1] = score[1] + 1}
-    }
-    console.log(`Game End!\nHuman points: ${score[0]}\nComputer points: ${score[1]}`)
+function updateScore(isHumanWinner){
+    if (isHumanWinner){score[0] = score[0] + 1}
+    else {score[1] = score[1] + 1}
+    console.log(`Human points: ${score[0]}\nComputer points: ${score[1]}`)
 }
 
-function playRound() {
-    let winningChoice = 'Tie'
-    let computerChoice = 0;
-    while (winningChoice == 'Tie') {
-        input = prompt("Enter your choice!\nRock\nPaper\nScissors").toLowerCase()
+function playRound(humanChoice) {
+    computerChoice = Math.floor(Math.random() * 3)
 
-        let humanChoice = choices.indexOf(input)
-        computerChoice = Math.floor(Math.random() * 3)
+    console.log(`You chose: ${choices[humanChoice]} (${humanChoice})\nComputer chose: ${choices[computerChoice]} (${computerChoice})`)
 
-        console.log(`You chose: ${choices[humanChoice]} (${humanChoice})\nComputer chose: ${choices[computerChoice]} (${computerChoice})`)
-
-        winningChoice = getWinningChoice(humanChoice, computerChoice)
-        displayGameEndText(winningChoice, humanChoice, computerChoice)
+    let winner;
+    if (humanChoice != computerChoice){
+        let isHumanWinner = getIsHumanWinner(humanChoice, computerChoice)
+        displayResult(winner, humanChoice, computerChoice)
+        updateScore(isHumanWinner)
     }
-
-    if (computerChoice == winningChoice) { 
-        return false
-    } else {
-        return true
+    else {
+        console.log(`Tie! ${choices[humanChoice]} ties with ${choices[computerChoice]}`)
     }
 }
 
-function getWinningChoice(humanChoice, computerChoice){
+function getIsHumanWinner(humanChoice, computerChoice){
     if (humanChoice > computerChoice){
         if (humanChoice == 2 && computerChoice == 0){
-            return computerChoice
+            return false
         }
         else {
-            return humanChoice
+            return true
         }
     }
 
     else if (humanChoice < computerChoice) {
         if (computerChoice == 2 && humanChoice == 0){
-            return humanChoice
+            return true
         } else {
-            return computerChoice
+            return false
         }
     }
-    
-    return "Tie" 
 }
 
-function displayGameEndText(winningChoice, humanChoice, computerChoice) {
-    if (winningChoice == 'Tie') {
-        console.log(`Tie! ${choices[humanChoice]} ties with ${choices[humanChoice]}`)
-    } else {
-        losingChoice = computerChoice
-        let endtext = "Win"
-        if (computerChoice == winningChoice) { losingChoice = humanChoice; endtext = "Lose"} 
-        console.log(`You ${endtext}! ${choices[winningChoice]} beats ${choices[losingChoice]}`)
+function displayResult(winner, humanChoice, computerChoice) {
+    losingChoice = computerChoice;
+    winningChoice = humanChoice;
+    endtext = "Win";
+
+    if (winner == 'computer') {
+        losingChoice = humanChoice;
+        winningChoice = computerChoice;
+        endtext = "Lose";
     }
+
+    console.log(`You ${endtext}! ${choices[winningChoice]} beats ${choices[losingChoice]}`)
+    
 }
 

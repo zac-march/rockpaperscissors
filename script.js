@@ -1,5 +1,6 @@
 const choices = ["rock", "paper", "scissors"]
 const choiceButtons = document.querySelectorAll('.choice')
+const resultDiv = document.querySelector('#result')
 let score = [0, 0]
 
 choiceButtons.forEach((button) => {
@@ -54,7 +55,7 @@ function getIsHumanWinner(humanChoice, computerChoice){
 function displayResult(isHumanWinner, humanChoice, computerChoice) {
 
     if (isHumanWinner == null){
-        console.log(`Tie! ${choices[humanChoice]} ties with ${choices[computerChoice]}`)
+        resultDiv.textContent = `Tie! ${choices[humanChoice]} ties with ${choices[computerChoice]}`
         return
     }
 
@@ -68,7 +69,7 @@ function displayResult(isHumanWinner, humanChoice, computerChoice) {
         endtext = "Lose";
     }
 
-    console.log(`You ${endtext}! ${choices[winningChoice]} beats ${choices[losingChoice]}`)
+    resultDiv.textContent = `You ${endtext}! ${choices[winningChoice]} beats ${choices[losingChoice]}`
     
 }
 

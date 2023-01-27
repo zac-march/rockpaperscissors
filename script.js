@@ -1,6 +1,11 @@
 const choices = ["rock", "paper", "scissors"]
 const choiceButtons = document.querySelectorAll('.choice')
-const textDivs = document.querySelectorAll('.display')
+
+let textDivsDict = {}
+let textDivs = document.querySelectorAll('.display')
+for (div in textDivs){
+    textDivsDict[textDivs[div].id] = textDivs[div]
+}
 
 const RESULT_INDEX = 0;
 const CHOICE_INDEX = 1;
@@ -23,11 +28,11 @@ function updateScore(isHumanWinner){
     if (isHumanWinner){scores['human'] += 1}
     else {scores['computer'] += 1}
     
-    textDivs[SCORE_INDEX].textContent = `Human points: ${scores['human']}\nComputer points: ${scores['computer']}`
+    textDivsDict['score'].textContent = `Human points: ${scores['human']}\nComputer points: ${scores['computer']}`
     
     for (key in scores){
         if (scores[key] == 5){
-            textDivs[GAMEOVER_INDEX].textContent = `${key.toUpperCase()} WINS!`
+            textDivsDict['gameover'].textContent = `${key.toUpperCase()} WINS!`
             
         }
     }
@@ -36,7 +41,7 @@ function updateScore(isHumanWinner){
 function playRound(humanChoice) {
     computerChoice = Math.floor(Math.random() * 3)
 
-    textDivs[CHOICE_INDEX].textContent = `You chose: ${choices[humanChoice]} (${humanChoice})\nComputer chose: ${choices[computerChoice]} (${computerChoice})`
+    textDivsDict['choice'].textContent = `You chose: ${choices[humanChoice]} (${humanChoice})\nComputer chose: ${choices[computerChoice]} (${computerChoice})`
 
     let isHumanWinner = null;
     if (humanChoice != computerChoice){
@@ -68,7 +73,7 @@ function getIsHumanWinner(humanChoice, computerChoice){
 function displayResult(isHumanWinner, humanChoice, computerChoice) {
 
     if (isHumanWinner == null){
-        textDivs[RESULT_INDEX].textContent = `Tie! ${choices[humanChoice]} ties with ${choices[computerChoice]}`
+        textDivsDict["result"].textContent = `Tie! ${choices[humanChoice]} ties with ${choices[computerChoice]}`
         return
     }
 
@@ -82,7 +87,7 @@ function displayResult(isHumanWinner, humanChoice, computerChoice) {
         endtext = "Lose";
     }
 
-    textDivs[RESULT_INDEX].textContent = `You ${endtext}! ${choices[winningChoice]} beats ${choices[losingChoice]}`
+    textDivsDict["result"].textContent = `You ${endtext}! ${choices[winningChoice]} beats ${choices[losingChoice]}`
     
 }
 

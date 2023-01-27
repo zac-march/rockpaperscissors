@@ -1,19 +1,12 @@
 const choices = ["rock", "paper", "scissors"]
 const choiceButtons = document.querySelectorAll('.choice')
+const choiceDisplay = document.querySelectorAll('.display-choice')
 
 let textDivsDict = {}
 let textDivs = document.querySelectorAll('.display')
 for (div in textDivs){
     textDivsDict[textDivs[div].id] = textDivs[div]
 }
-
-const RESULT_INDEX = 0;
-const CHOICE_INDEX = 1;
-const SCORE_INDEX = 2;
-const GAMEOVER_INDEX = 3;
-
-const HUMAN_SCORE_INDEX = 2
-const COMPUTER_SCORE_INDEX = 1
 
 let scores = {human: 0, computer: 0}
 
@@ -48,7 +41,17 @@ function playRound(humanChoice) {
         isHumanWinner = getIsHumanWinner(humanChoice, computerChoice)
         updateScore(isHumanWinner)
     }
-    displayResult(isHumanWinner, humanChoice, computerChoice)
+    updateDisplay(isHumanWinner, humanChoice, computerChoice)
+}
+
+function updateDisplay(isHumanWinner, humanChoice, computerChoice){
+    updateResultDisplay(isHumanWinner, humanChoice, computerChoice)
+    updateChoiceDisplay(humanChoice, computerChoice)
+}
+
+function updateChoiceDisplay(humanChoice, computerChoice) {
+    choiceDisplay[0].textContent = choices[humanChoice].toUpperCase()
+    choiceDisplay[1].textContent = choices[computerChoice].toUpperCase()
 }
 
 function getIsHumanWinner(humanChoice, computerChoice){
@@ -70,7 +73,7 @@ function getIsHumanWinner(humanChoice, computerChoice){
     }
 }
 
-function displayResult(isHumanWinner, humanChoice, computerChoice) {
+function updateResultDisplay(isHumanWinner, humanChoice, computerChoice) {
 
     if (isHumanWinner == null){
         textDivsDict["result"].textContent = `Tie! ${choices[humanChoice]} ties with ${choices[computerChoice]}`

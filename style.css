@@ -1,0 +1,24 @@
+h1#title {
+    text-align: center;
+    background-color: #375c5c;
+    color: white;
+}
+
+#choices {
+    display: flex;
+    padding: 10px 10px;
+    gap: 10px;
+    justify-content: center;
+}
+
+.display-choices {
+    display: flex;
+    padding: 10px 100px;
+    gap: 10px;
+    justify-content: space-between;
+    
+}
+.choice {
+    background-color: #6aafaf;
+    padding: 50px;
+}

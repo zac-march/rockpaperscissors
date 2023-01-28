@@ -20,8 +20,9 @@ body, html {
 .display-choices {
     display: flex;
     padding: 10px 100px;
-    gap: 10px;
-    justify-content: space-between;
+    gap: 50px;
+    justify-content: center;
+
     
 }
 .choice {

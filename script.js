@@ -21,8 +21,7 @@ choiceButtons.forEach((button) => {
 });
 
 function updateScore(isHumanWinner){
-    if (isHumanWinner){scores['human'] += 1}
-    else {scores['computer'] += 1}
+    isHumanWinner ? scores['human'] += 1 : scores['computer'] += 1
     
     textDivsDict['score'].textContent = `Human points: ${scores['human']}\nComputer points: ${scores['computer']}`
     
@@ -59,7 +58,7 @@ function playRound(humanChoice){
         else{
             matchStartTimerText.textContent = choices[timeLeft];
             timeLeft--;
-            setTimeout(roundStartTimer, 500);
+            setTimeout(roundStartTimer, 100);
         }
     }
     roundStartTimer();
@@ -71,6 +70,7 @@ function clearDisplay() {
     choiceDisplay[0].textContent = ""
     choiceDisplay[1].textContent = ""
     textDivsDict["result"].textContent = ""
+    textDivsDict['gameover'].textContent = ""
 }
 
 function getIsHumanWinner(humanChoice, computerChoice){
@@ -93,15 +93,9 @@ function updateDisplay(isHumanWinner, humanChoice, computerChoice) {
         return
     }
 
-    losingChoice = computerChoice;
-    winningChoice = humanChoice;
-    endtext = "Win";
-
-    if (!isHumanWinner) {
-        losingChoice = humanChoice;
-        winningChoice = computerChoice;
-        endtext = "Lose";
-    }
+    losingChoice = isHumanWinner ? computerChoice : humanChoice
+    winningChoice = isHumanWinner ? humanChoice : computerChoice
+    endtext = isHumanWinner ? "Win" : "Lose"
 
     textDivsDict["result"].textContent = `You ${endtext}! ${choices[winningChoice]} beats ${choices[losingChoice]}`
     

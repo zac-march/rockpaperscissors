@@ -28,3 +28,10 @@ body, html {
     background-color: #6aafaf;
     padding: 50px;
 }
+
+.display{
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+    height: 1em;
+}

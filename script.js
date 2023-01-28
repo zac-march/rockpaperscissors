@@ -33,23 +33,18 @@ function updateScore(isHumanWinner){
     }
 }
 
-function playRound(humanChoice) {
+function playRound(humanChoice){
     computerChoice = Math.floor(Math.random() * 3)
-
-    let isHumanWinner = null;
-    if (humanChoice != computerChoice){
-        isHumanWinner = getIsHumanWinner(humanChoice, computerChoice)
-        updateScore(isHumanWinner)
-    }
-    beginMatchStartTimer(isHumanWinner, humanChoice, computerChoice)
-}
-
-function beginMatchStartTimer(isHumanWinner, humanChoice, computerChoice){
     clearDisplay()
     let timeLeft = 2;
     let matchStartTimer = function(){
         if(timeLeft <= -1){
             matchStartTimerText.textContent = "vs";
+            let isHumanWinner = null;
+            if (humanChoice != computerChoice){
+                isHumanWinner = getIsHumanWinner(humanChoice, computerChoice)
+                updateScore(isHumanWinner) 
+            }
             updateDisplay(isHumanWinner, humanChoice, computerChoice)
         }
         else{
@@ -63,11 +58,10 @@ function beginMatchStartTimer(isHumanWinner, humanChoice, computerChoice){
 
 
 function clearDisplay() {
-    matchStartTimerText.textContent = ""
+    matchStartTimerText.style.color = ""
     choiceDisplay[0].textContent = ""
     choiceDisplay[1].textContent = ""
     textDivsDict["result"].textContent = ""
-    textDivsDict['choice'].textContent = ""
 }
 
 function getIsHumanWinner(humanChoice, computerChoice){
@@ -90,7 +84,6 @@ function getIsHumanWinner(humanChoice, computerChoice){
 }
 
 function updateDisplay(isHumanWinner, humanChoice, computerChoice) {
-    textDivsDict['choice'].textContent = `You chose: ${choices[humanChoice]} (${humanChoice})\nComputer chose: ${choices[computerChoice]} (${computerChoice})`
 
     choiceDisplay[0].textContent = choices[humanChoice].toUpperCase()
     choiceDisplay[1].textContent = choices[computerChoice].toUpperCase()

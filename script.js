@@ -58,7 +58,7 @@ function playRound(humanChoice){
         }
         else{
             matchStartTimerText.textContent = choices[timeLeft];
-            timeLeft -= 1;
+            timeLeft--;
             setTimeout(roundStartTimer, 500);
         }
     }
@@ -74,22 +74,13 @@ function clearDisplay() {
 }
 
 function getIsHumanWinner(humanChoice, computerChoice){
-    if (humanChoice > computerChoice){
-        if (humanChoice == 2 && computerChoice == 0){
-            return false
-        }
-        else {
-            return true
-        }
+    if (humanChoice == 2 && computerChoice == 0){
+        return false
     }
-
-    else if (humanChoice < computerChoice) {
-        if (computerChoice == 2 && humanChoice == 0){
-            return true
-        } else {
-            return false
-        }
+    else if (computerChoice == 2 && humanChoice == 0){
+        return true
     }
+    return humanChoice > computerChoice
 }
 
 function updateDisplay(isHumanWinner, humanChoice, computerChoice) {

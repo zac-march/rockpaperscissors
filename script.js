@@ -11,6 +11,7 @@ for (div in textDivs){
 }
 
 let scores = {human: 0, computer: 0}
+let isRoundInProgress = false;
 
 choiceButtons.forEach((button) => {
     button.addEventListener('click', (e) => {
@@ -28,17 +29,24 @@ function updateScore(isHumanWinner){
     for (key in scores){
         if (scores[key] == 5){
             textDivsDict['gameover'].textContent = `${key.toUpperCase()} WINS!`
-            
+            scores = {human: 0, computer: 0}
         }
     }
 }
 
 function playRound(humanChoice){
+    if (isRoundInProgress){
+        return
+    }
+    isRoundInProgress = true;
+    
     computerChoice = Math.floor(Math.random() * 3)
+
     clearDisplay()
-    let timeLeft = 2;
-    let matchStartTimer = function(){
-        if(timeLeft <= -1){
+
+    let timeLeft = choices.length - 1;
+    let roundStartTimer = function(){
+        if(timeLeft < 0){
             matchStartTimerText.textContent = "vs";
             let isHumanWinner = null;
             if (humanChoice != computerChoice){
@@ -46,14 +54,15 @@ function playRound(humanChoice){
                 updateScore(isHumanWinner) 
             }
             updateDisplay(isHumanWinner, humanChoice, computerChoice)
+            isRoundInProgress = false;
         }
         else{
             matchStartTimerText.textContent = choices[timeLeft];
             timeLeft -= 1;
-            setTimeout(matchStartTimer, 500);
+            setTimeout(roundStartTimer, 500);
         }
     }
-    matchStartTimer();
+    roundStartTimer();
 }
 
 

@@ -1,7 +1,9 @@
 const choices = ["rock", "paper", "scissors"]
 const choiceButtons = document.querySelectorAll('.choice')
 const choiceDisplay = document.querySelectorAll('.display-choice')
+const matchStartTimerText = document.querySelector('#match-start-text')
 
+let timeLeft = 3
 let textDivsDict = {}
 let textDivs = document.querySelectorAll('.display')
 for (div in textDivs){
@@ -34,24 +36,38 @@ function updateScore(isHumanWinner){
 function playRound(humanChoice) {
     computerChoice = Math.floor(Math.random() * 3)
 
-    textDivsDict['choice'].textContent = `You chose: ${choices[humanChoice]} (${humanChoice})\nComputer chose: ${choices[computerChoice]} (${computerChoice})`
-
     let isHumanWinner = null;
     if (humanChoice != computerChoice){
         isHumanWinner = getIsHumanWinner(humanChoice, computerChoice)
         updateScore(isHumanWinner)
     }
-    updateDisplay(isHumanWinner, humanChoice, computerChoice)
+    beginMatchStartTimer(isHumanWinner, humanChoice, computerChoice)
 }
 
-function updateDisplay(isHumanWinner, humanChoice, computerChoice){
-    updateResultDisplay(isHumanWinner, humanChoice, computerChoice)
-    updateChoiceDisplay(humanChoice, computerChoice)
+function beginMatchStartTimer(isHumanWinner, humanChoice, computerChoice){
+    clearDisplay()
+    let timeLeft = 2;
+    let matchStartTimer = function(){
+        if(timeLeft <= -1){
+            matchStartTimerText.textContent = "vs";
+            updateDisplay(isHumanWinner, humanChoice, computerChoice)
+        }
+        else{
+            matchStartTimerText.textContent = choices[timeLeft];
+            timeLeft -= 1;
+            setTimeout(matchStartTimer, 500);
+        }
+    }
+    matchStartTimer();
 }
 
-function updateChoiceDisplay(humanChoice, computerChoice) {
-    choiceDisplay[0].textContent = choices[humanChoice].toUpperCase()
-    choiceDisplay[1].textContent = choices[computerChoice].toUpperCase()
+
+function clearDisplay() {
+    matchStartTimerText.textContent = ""
+    choiceDisplay[0].textContent = ""
+    choiceDisplay[1].textContent = ""
+    textDivsDict["result"].textContent = ""
+    textDivsDict['choice'].textContent = ""
 }
 
 function getIsHumanWinner(humanChoice, computerChoice){
@@ -73,7 +89,11 @@ function getIsHumanWinner(humanChoice, computerChoice){
     }
 }
 
-function updateResultDisplay(isHumanWinner, humanChoice, computerChoice) {
+function updateDisplay(isHumanWinner, humanChoice, computerChoice) {
+    textDivsDict['choice'].textContent = `You chose: ${choices[humanChoice]} (${humanChoice})\nComputer chose: ${choices[computerChoice]} (${computerChoice})`
+
+    choiceDisplay[0].textContent = choices[humanChoice].toUpperCase()
+    choiceDisplay[1].textContent = choices[computerChoice].toUpperCase()
 
     if (isHumanWinner == null){
         textDivsDict["result"].textContent = `Tie! ${choices[humanChoice]} ties with ${choices[computerChoice]}`
